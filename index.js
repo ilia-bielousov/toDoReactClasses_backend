@@ -7,12 +7,11 @@ import { addNote, getAllNotes, deleteNote, updateChecked } from "./Controllers/n
 import chekAuth from "./chekAuth.js";
 
 const app = express();
-const port = 5000;
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect('mongodb+srv://user:user@cluster0.haueao7.mongodb.net/toDo')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('db ok'))
   .catch((error) => console.log(error));
 
@@ -27,7 +26,7 @@ app.get('/notes', chekAuth, getAllNotes);
 app.delete('/delete-note', chekAuth, deleteNote);
 app.patch('/update-note', chekAuth, updateChecked);
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 5000, () => {
   try {
     console.log('server OK');
   } catch (error) {
