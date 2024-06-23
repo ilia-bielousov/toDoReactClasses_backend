@@ -7,10 +7,10 @@ export const addNote = async (req, res) => {
       text: req.body.text,
       profile: req.body.profile
     });
-  
+
     await doc.save();
-  
-    return res.json({ succes: true});
+
+    return res.json({ succes: true });
   } catch (err) {
     console.log(err);
 
@@ -33,7 +33,7 @@ export const deleteNote = async (req, res) => {
     const { _id } = req.body;
 
     if (!_id) {
-      return res.status(400).json({ message: 'note is not found'});
+      return res.status(400).json({ message: 'note is not found' });
     }
 
     const note = await Note.findByIdAndDelete(_id);
@@ -49,10 +49,26 @@ export const updateChecked = async (req, res) => {
     const note = req.body;
 
     if (!note._id) {
-      res.status(400).json( {message: 'Id не указан'});
+      res.status(400).json({ message: 'Id не указан' });
     }
 
-    const updateNote = await Note.findByIdAndUpdate(note._id, { checked: note.checked } );
+    const updateNote = await Note.findByIdAndUpdate(note._id, { checked: note.checked });
+
+    return res.json(updateNote);
+  } catch (err) {
+    return res.status(500).json({ succes: false });
+  }
+}
+
+export const updateText = async (req, res) => {
+  try {
+    const note = req.body;
+
+    if (!note._id) {
+      res.status(400).json({ message: 'Id не указан' });
+    }
+
+    const updateNote = await Note.findByIdAndUpdate(note._id, { text: note.text });
 
     return res.json(updateNote);
   } catch (err) {

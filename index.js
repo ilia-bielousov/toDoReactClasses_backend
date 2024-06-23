@@ -3,15 +3,18 @@ import mongoose from "mongoose";
 import cors from 'cors';
 import { check } from 'express-validator';
 import { registration, login } from "./Controllers/auth.js";
-import { addNote, getAllNotes, deleteNote, updateChecked } from "./Controllers/note.js";
+import { addNote, getAllNotes, deleteNote, updateChecked, updateText } from "./Controllers/note.js";
 import chekAuth from "./chekAuth.js";
 
 const app = express();
+const PORT = 5000;
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(
+  'mongodb+srv://admin:12345@cluster0.7vr2kqk.mongodb.net/'
+)
   .then(() => console.log('db ok'))
   .catch((error) => console.log(error));
 
@@ -24,9 +27,10 @@ app.post('/login', login);
 app.post('/add-note', chekAuth, addNote);
 app.get('/notes', chekAuth, getAllNotes);
 app.delete('/delete-note', chekAuth, deleteNote);
-app.patch('/update-note', chekAuth, updateChecked);
+app.patch('/update-note-check', chekAuth, updateChecked);
+app.patch('/update-note-text', chekAuth, updateText);
 
-app.listen(process.env.PORT || 5000, () => {
+app.listen(PORT, () => {
   try {
     console.log('server OK');
   } catch (error) {
