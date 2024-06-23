@@ -7,7 +7,7 @@ import { addNote, getAllNotes, deleteNote, updateChecked, updateText } from "./C
 import chekAuth from "./chekAuth.js";
 
 const app = express();
-const PORT = 5000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(cors());
