@@ -30,7 +30,7 @@ app.delete('/delete-note', chekAuth, deleteNote);
 app.patch('/update-note-check', chekAuth, updateChecked);
 app.patch('/update-note-text', chekAuth, updateText);
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   try {
     console.log('server OK');
   } catch (error) {
